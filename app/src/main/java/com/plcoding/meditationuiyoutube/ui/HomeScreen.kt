@@ -38,6 +38,7 @@ fun HomeScreen() {
 }
 
 @Composable
+@Preview(showBackground = true)
 fun Greeting(
     name: String = "Atharv Mishra"
 ) {
@@ -68,6 +69,12 @@ fun Greeting(
         )
 
     }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun ChipSection(){
+
 }
 
 @Composable
