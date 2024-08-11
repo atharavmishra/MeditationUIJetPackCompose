@@ -1,16 +1,21 @@
 package com.plcoding.meditationuiyoutube.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -29,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.plcoding.meditationuiyoutube.Features
 import com.plcoding.meditationuiyoutube.R
 import com.plcoding.meditationuiyoutube.ui.theme.ButtonBlue
 import com.plcoding.meditationuiyoutube.ui.theme.DarkerButtonBlue
@@ -161,14 +167,30 @@ fun CurrentMeditation(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun FeaturedSection() {
+fun FeaturedSection(
+    listFeatures: List<Features>
+) {
     Column {
         Text(
             text = "Featured",
             style = MaterialTheme.typography.h1,
             modifier = Modifier.padding(start = 10.dp)
         )
+        LazyVerticalGrid(
+            cells = GridCells.Fixed(2),
+            contentPadding = PaddingValues(
+                start = 7.5.dp,
+                end = 7.5.dp,
+                bottom = 100.dp
+            ),
+            modifier = Modifier.fillMaxHeight()
+        ) {
+            items(listFeatures.size) {
+
+            }
+        }
     }
 }
 
