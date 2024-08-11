@@ -28,10 +28,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.plcoding.meditationuiyoutube.R
 import com.plcoding.meditationuiyoutube.ui.theme.ButtonBlue
 import com.plcoding.meditationuiyoutube.ui.theme.DarkerButtonBlue
 import com.plcoding.meditationuiyoutube.ui.theme.DeepBlue
+import com.plcoding.meditationuiyoutube.ui.theme.LightRed
 import com.plcoding.meditationuiyoutube.ui.theme.TextWhite
 
 @Composable
@@ -45,6 +47,8 @@ fun HomeScreen() {
         Column {
             Greeting()
             ChipSection(chips = chips)
+            CurrentMeditation()
+            FeaturedSection()
         }
     }
 
@@ -65,8 +69,7 @@ fun Greeting(
     ) {
         Column(verticalArrangement = Arrangement.Center) {
             Text(
-                text = "Good Morning $name",
-                style = MaterialTheme.typography.h2
+                text = "Good Morning $name", style = MaterialTheme.typography.h2
             )
             Text(
                 text = "We wish you have a good day!",
@@ -96,9 +99,7 @@ fun ChipSection(
         items(chips.size) {
             Box(modifier = Modifier
                 .padding(
-                    start = 10.dp,
-                    top = 15.dp,
-                    bottom = 15.dp
+                    start = 10.dp, top = 15.dp, bottom = 15.dp
                 )
                 .clickable {
                     selectedChipIndex = it
@@ -108,14 +109,66 @@ fun ChipSection(
                     if (selectedChipIndex == it) ButtonBlue
                     else DarkerButtonBlue
                 )
-                .padding(10.dp)
-            ) {
+                .padding(10.dp)) {
                 Text(
                     text = chips[it],
-                    color = TextWhite
+                    color = TextWhite,
+                    fontSize = 10.sp
                 )
             }
         }
+    }
+}
+
+@Composable
+fun CurrentMeditation(
+    color: Color = LightRed
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .padding(
+                start = 10.dp, end = 10.dp, top = 15.dp, bottom = 15.dp
+            )
+            .clip(RoundedCornerShape(10.dp))
+            .background(color)
+            .fillMaxWidth()
+            .padding(horizontal = 10.dp, vertical = 15.dp)
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                text = "Daily Thought",
+                style = MaterialTheme.typography.h1,
+                color = Color.White,
+                modifier = Modifier.padding(bottom = 5.dp)
+            )
+            Text(
+                text = "Meditation . 3-10 min",
+                style = MaterialTheme.typography.body1,
+                color = Color.White
+            )
+        }
+        Icon(
+            painter = painterResource(id = R.drawable.ic_play),
+            contentDescription = "Play Button",
+            modifier = Modifier.size(16.dp),
+            tint = Color.White
+        )
+
+    }
+}
+
+@Composable
+fun FeaturedSection() {
+    Column {
+        Text(
+            text = "Featured",
+            style = MaterialTheme.typography.h1,
+            modifier = Modifier.padding(start = 10.dp)
+        )
     }
 }
 
