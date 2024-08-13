@@ -5,9 +5,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,17 +23,17 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.plcoding.meditationuiyoutube.Features
@@ -54,7 +56,7 @@ fun HomeScreen() {
             Greeting()
             ChipSection(chips = chips)
             CurrentMeditation()
-            FeaturedSection()
+//            FeaturedSection()
         }
     }
 
@@ -182,15 +184,36 @@ fun FeaturedSection(
             cells = GridCells.Fixed(2),
             contentPadding = PaddingValues(
                 start = 7.5.dp,
-                end = 7.5.dp,
-                bottom = 100.dp
-            ),
-            modifier = Modifier.fillMaxHeight()
+                end = 7.5.dp, bottom = 100.dp
+            ), modifier = Modifier.fillMaxHeight()
         ) {
             items(listFeatures.size) {
 
             }
         }
+    }
+}
+
+@Composable
+fun FeatureItem(
+    features: Features
+) {
+    BoxWithConstraints(
+        modifier = Modifier
+            .padding(7.5.dp)
+            .aspectRatio(1f)
+            .clip(RoundedCornerShape(10.dp))
+            .background(features.darkColor)
+    ) {
+        val width = constraints.maxWidth
+        val height = constraints.maxHeight
+
+        val mediumColoredPoint1 = Offset(0f, height * 0.3f)
+        val mediumColoredPoint2 = Offset(width * 0.1f, height * 0.35f)
+        val mediumColoredPoint3 = Offset(width*0.3f, height * 0.05f)
+        val mediumColoredPoint4 = Offset(0f, height * 0.3f)
+        val mediumColoredPoint5 = Offset(0f, height * 0.3f)
+
     }
 }
 
