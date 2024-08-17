@@ -39,9 +39,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.plcoding.meditationuiyoutube.BottomMenuContent
 import com.plcoding.meditationuiyoutube.Features
 import com.plcoding.meditationuiyoutube.R
 import com.plcoding.meditationuiyoutube.standardQuadFromTo
+import com.plcoding.meditationuiyoutube.ui.theme.AquaBlue
 import com.plcoding.meditationuiyoutube.ui.theme.Beige1
 import com.plcoding.meditationuiyoutube.ui.theme.Beige2
 import com.plcoding.meditationuiyoutube.ui.theme.Beige3
@@ -69,6 +71,7 @@ fun HomeScreen() {
             .background(DeepBlue)
     ) {
         Column {
+
             Greeting()
             ChipSection(chips = chips)
             CurrentMeditation()
@@ -97,6 +100,16 @@ fun HomeScreen() {
                     )
                 )
             )
+            MenuItem(
+                list = listOf(
+                    BottomMenuContent("Home", R.drawable.ic_home),
+                    BottomMenuContent("Meditate", R.drawable.ic_bubble),
+                    BottomMenuContent("Sleep", R.drawable.ic_moon),
+                    BottomMenuContent("Music", R.drawable.ic_music),
+                    BottomMenuContent("Profile", R.drawable.ic_profile)
+                )
+            )
+
         }
     }
 
@@ -214,11 +227,11 @@ fun CurrentMeditation(
 fun FeaturedSection(
     listFeatures: List<Features>
 ) {
-    Column {
+    Column(modifier = Modifier.fillMaxHeight(0.8f)) {
         Text(
-            text = "Featured",
+            text = "Features",
             style = MaterialTheme.typography.h1,
-            modifier = Modifier.padding(start = 10.dp)
+            modifier = Modifier.padding(15.dp)
         )
         LazyVerticalGrid(
             cells = GridCells.Fixed(2),
@@ -325,6 +338,79 @@ fun FeatureItem(
 
         }
     }
+}
+
+@Composable
+fun MenuItem(
+    list: List<BottomMenuContent>,
+    modifier: Modifier = Modifier,
+    activeHighLightColor: Color = ButtonBlue,
+    activeTextColor: Color = Color.White,
+    inactiveTextColor: Color = AquaBlue,
+    initialSelectedItemState: Int = 0
+) {
+    var selectedItemIndex by remember {
+        mutableStateOf(initialSelectedItemState)
+    }
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(DeepBlue)
+            .padding(15.dp),
+        horizontalArrangement = Arrangement.SpaceAround,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        list.forEachIndexed { index, item ->
+            BottomMenuItem(
+                item = item,
+                isSelected = index == selectedItemIndex,
+                activeHighLightColor = activeHighLightColor,
+                activeTextColor = activeTextColor,
+                inactiveTextColor = inactiveTextColor
+            ) {
+                selectedItemIndex = index
+            }
+        }
+    }
+
+}
+
+@Composable
+fun BottomMenuItem(
+    item: BottomMenuContent,
+    isSelected: Boolean,
+    activeHighLightColor: Color = ButtonBlue,
+    activeTextColor: Color = Color.White,
+    inactiveTextColor: Color = AquaBlue,
+    onItemClick: () -> Unit
+) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.clickable {
+            onItemClick()
+        }
+
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .clip(RoundedCornerShape(10.dp))
+                .background(if (isSelected) activeHighLightColor else Color.Transparent)
+                .padding(10.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = item.iconId),
+                contentDescription = item.text,
+                tint = if (isSelected) activeTextColor else inactiveTextColor,
+                modifier = Modifier.size(20.dp)
+            )
+
+        }
+        Text(
+            text = item.text, color = if (isSelected) activeTextColor else inactiveTextColor
+        )
+    }
+
 }
 
 @Composable
